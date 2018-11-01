@@ -1,185 +1,185 @@
 ---
-swagger: "2.0"
+swagger: '2.0'
 info:
-  description: "This is a sample."
-  version: "1.0.0"
-  title: "Sandbox"
-host: "localhost:8080"
-basePath: "/v1"
+  description: This is a sample.
+  version: 1.0.0
+  title: Sandbox
+host: localhost:8080
+basePath: /v1
 tags:
-  - name: "users"
+  - name: users
 schemes:
-  - "http"
+  - http
 paths:
   /users:
     post:
       tags:
-        - "users"
-      summary: "Create a new user."
-      description: ""
-      operationId: "createUser"
+        - users
+      summary: Create a new user.
+      description: ''
+      operationId: createUser
       produces:
-        - "application/json"
+        - application/json
       parameters:
-        - in: "body"
-          name: "body"
-          description: "Created user object"
+        - in: body
+          name: body
+          description: Created user object
           required: true
           schema:
-            $ref: "#/definitions/WriteUser"
+            $ref: '#/definitions/WriteUser'
       responses:
         201:
-          description: "Create"
+          description: Create
           schema:
-            $ref: "#/definitions/User"
+            $ref: '#/definitions/User'
         400:
-          $ref: "#/responses/BadRequest"
+          $ref: '#/responses/BadRequest'
         404:
-          $ref: "#/responses/NotFound"
+          $ref: '#/responses/NotFound'
     get:
       tags:
-        - "users"
-      summary: "Lists users."
-      description: ""
-      operationId: "getUsers"
+        - users
+      summary: Lists users.
+      description: ''
+      operationId: getUsers
       produces:
-        - "application/json"
+        - application/json
       parameters:
-        - in: "query"
-          name: "sort"
+        - in: query
+          name: sort
           required: false
-          type: "string"
+          type: string
           enum:
-            - "user_id"
-            - "username"
-            - "user_status"
+            - user_id
+            - username
+            - user_status
       responses:
         200:
-          description: "OK"
+          description: OK
           schema:
-            $ref: "#/definitions/Users"
+            $ref: '#/definitions/Users'
   /users/{user_id}:
     get:
       tags:
-        - "users"
-      summary: "Get the user."
-      description: ""
-      operationId: "getUser"
+        - users
+      summary: Get the user.
+      description: ''
+      operationId: getUser
       produces:
-        - "application/json"
+        - application/json
       parameters:
-        - $ref: "#/parameters/PathUserId"
+        - $ref: '#/parameters/PathUserId'
       responses:
         200:
-          description: "OK"
+          description: OK
           schema:
-            $ref: "#/definitions/User"
+            $ref: '#/definitions/User'
         404:
-          $ref: "#/responses/NotFound"
+          $ref: '#/responses/NotFound'
     put:
       tags:
-        - "users"
-      summary: "Update the user."
-      description: ""
-      operationId: "updateUser"
+        - users
+      summary: Update the user.
+      description: ''
+      operationId: updateUser
       produces:
-        - "application/json"
+        - application/json
       parameters:
-        - $ref: "#/parameters/PathUserId"
-        - in: "body"
-          name: "body"
-          description: "Updated user object"
+        - $ref: '#/parameters/PathUserId'
+        - in: body
+          name: body
+          description: Updated user object
           required: true
           schema:
-            $ref: "#/definitions/WriteUser"
+            $ref: '#/definitions/WriteUser'
       responses:
         200:
-          description: "OK"
+          description: OK
           schema:
-            $ref: "#/definitions/User"
+            $ref: '#/definitions/User'
         400:
-          $ref: "#/responses/BadRequest"
+          $ref: '#/responses/BadRequest'
         404:
-          $ref: "#/responses/NotFound"
+          $ref: '#/responses/NotFound'
     delete:
       tags:
-        - "users"
-      summary: "Delete the user."
-      description: ""
-      operationId: "deleteUser"
+        - users
+      summary: Delete the user.
+      description: ''
+      operationId: deleteUser
       produces:
-        - "application/json"
+        - application/json
       parameters:
-        - $ref: "#/parameters/PathUserId"
+        - $ref: '#/parameters/PathUserId'
       responses:
         204:
-          $ref: "#/responses/NoContent"
+          $ref: '#/responses/NoContent'
         404:
-          $ref: "#/responses/NotFound"
+          $ref: '#/responses/NotFound'
 parameters:
   PathUserId:
-    in: "path"
-    name: "user_id"
+    in: path
+    name: user_id
     required: true
-    type: "integer"
-    format: "int64"
+    type: integer
+    format: int64
     x-example: 42
 responses:
   NoContent:
-    description: "No Content"
+    description: No Content
   BadRequest:
-    description: "Bad Request"
+    description: Bad Request
     schema:
-      $ref: "#/definitions/Errors"
+      $ref: '#/definitions/Errors'
   NotFound:
-    description: "Not Found"
+    description: Not Found
 definitions:
   WriteUser:
-    type: "object"
+    type: object
     properties:
       username:
-        type: "string"
+        type: string
         maxLength: 16
       first_name:
-        type: "string"
+        type: string
       last_name:
-        type: "string"
+        type: string
       email:
-        type: "string"
+        type: string
       password:
-        type: "string"
+        type: string
         minLength: 4
         maxLength: 20
       phone:
-        type: "string"
+        type: string
         x-digit: true
       user_status:
-        type: "integer"
-        format: "int32"
-        x-code-type: "userStatus"
-        description: "User Status"
+        type: integer
+        format: int32
+        x-code-type: userStatus
+        description: User Status
       height:
-        type: "number"
-        format: "float"
+        type: number
+        format: float
       born_on:
-        type: "string"
-        format: "date-time"
+        type: string
+        format: date-time
       gender:
-        type: "string"
+        type: string
         enum:
-          - "male"
-          - "female"
+          - male
+          - female
     example:
-      username: "username1"
-      first_name: "first_name1"
-      last_name: "last_name1"
-      email: "sample@example.com"
-      password: "password1"
-      phone: "09012345678"
+      username: 'username1'
+      first_name: 'first_name1'
+      last_name: 'last_name1'
+      email: 'sample@example.com'
+      password: 'password1'
+      phone: '09012345678'
       user_status: 1
       height: 173.5
-      born_on: "2001-10-15T12:34:56Z"
-      gender: "male"
+      born_on: '2001-10-15T12:34:56Z'
+      gender: 'male'
     required:
       - username
       - first_name
@@ -187,66 +187,66 @@ definitions:
       - email
       - password
   User:
-    type: "object"
+    type: object
     properties:
       user_id:
-        type: "integer"
+        type: integer
       username:
-        type: "string"
+        type: string
       first_name:
-        type: "string"
+        type: string
       last_name:
-        type: "string"
+        type: string
       email:
-        type: "string"
+        type: string
       phone:
-        type: "string"
+        type: string
       user_status:
-        type: "integer"
-        description: "User Status"
+        type: integer
+        description: User Status
       height:
-        type: "number"
-        format: "float"
+        type: number
+        format: float
       born_on:
-        type: "string"
-        format: "date-time"
+        type: string
+        format: date-time
       gender:
-        type: "string"
+        type: string
     example:
       user_id: 1
-      username: "username1"
-      first_name: "first_name1"
-      last_name: "last_name1"
-      email: "sample@example.com"
-      password: "password1"
-      phone: "09012345678"
+      username: 'username1'
+      first_name: 'first_name1'
+      last_name: 'last_name1'
+      email: 'sample@example.com'
+      password: 'password1'
+      phone: '09012345678'
       user_status: 1
       height: 173.5
-      born_on: "2001-10-15T12:34:56Z"
-      gender: "male"
+      born_on: '2001-10-15T12:34:56Z'
+      gender: 'male'
   Users:
-    type: "object"
+    type: object
     properties:
       users:
-        type: "array"
+        type: array
         items:
-          $ref: "#/definitions/User"
+          $ref: '#/definitions/User'
   Errors:
-    type: "object"
+    type: object
     properties:
       errors:
-        type: "array"
+        type: array
         items:
-          $ref: "#/definitions/Error"
+          $ref: '#/definitions/Error'
   Error:
-    type: "object"
+    type: object
     properties:
       code:
-        type: "string"
+        type: string
       field:
-        type: "string"
+        type: string
       message:
-        type: "string"
+        type: string
 externalDocs:
-  description: "Find out more about Swagger"
-  url: "http://swagger.io"
+  description: Find out more about Swagger
+  url: http://swagger.io
