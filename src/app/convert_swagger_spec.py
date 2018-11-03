@@ -32,7 +32,7 @@ def write(path: str, spec: dict):
 
 def where_dict(value, filter_func=lambda: True):
     if type(value) == OrderedDict:
-        delete_targets = []
+        filtered_keys = []
 
         keys = value.keys()
         for key in keys:
@@ -42,10 +42,10 @@ def where_dict(value, filter_func=lambda: True):
             else:
                 # OrderedDictはイテレート中に削除できないため
                 # いったんキーを保存しておき、後で削除する
-                delete_targets.append(key)
+                filtered_keys.append(key)
 
-        for target in delete_targets:
-            value.pop(target)
+        for key in filtered_keys:
+            value.pop(key)
     elif type(value) == list:
         for item in value:
             where_dict(item, filter_func)
