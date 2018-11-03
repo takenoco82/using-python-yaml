@@ -49,8 +49,6 @@ def where_dict(value, filter_func=lambda: True):
     elif type(value) == list:
         for item in value:
             where_dict(item, filter_func)
-    else:
-        pass
 
 
 def main():
