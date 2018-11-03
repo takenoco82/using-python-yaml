@@ -116,6 +116,20 @@ paths:
           $ref: '#/responses/NoContent'
         404:
           $ref: '#/responses/NotFound'
+  /users/me:
+    get:
+      tags:
+        - users
+      summary: Get myself.
+      description: ''
+      operationId: getMe
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/User'
 parameters:
   PathUserId:
     in: path
