@@ -30,29 +30,29 @@ def write(path: str, spec: dict):
         yaml.dump(spec, f, default_flow_style=False)
 
 
-def where_dict(value, filter_func=lambda: True):
+def filter_dict(value, where_func=lambda: True):
     if type(value) == OrderedDict:
-        filtered_keys = []
+        excluded_keys = []
 
         keys = value.keys()
         for key in keys:
             print(key)
-            if filter_func(key):
-                where_dict(value[key], filter_func)
+            if where_func(key):
+                filter_dict(value[key], where_func)
             else:
                 # OrderedDictはイテレート中に削除できないため
                 # いったんキーを保存しておき、後で削除する
-                filtered_keys.append(key)
+                excluded_keys.append(key)
 
-        for key in filtered_keys:
+        for key in excluded_keys:
             value.pop(key)
     elif type(value) == list:
         for item in value:
-            where_dict(item, filter_func)
+            filter_dict(item, where_func)
 
 
 def main():
-    def delete_func(key):
+    def where_func(key):
         if key == "example":
             return False
         elif type(key) == str and key.startswith("x-"):
@@ -62,7 +62,7 @@ def main():
 
     path = "./swagger.yaml"
     spec = read(path)
-    where_dict(spec, delete_func)
+    filter_dict(spec, where_func)
     write(path, spec)
 
 
