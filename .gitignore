@@ -1,0 +1,17 @@
+.DS_Store
+
+# https://github.com/github/gitignore/blob/master/Python.gitignore
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Unit test / coverage reports
+nosetests.xml
+coverage.xml
+
+# Rope project settings
+.ropeproject
+
+# mypy
+.mypy_cache/
