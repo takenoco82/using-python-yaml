@@ -1,6 +1,12 @@
 from collections import OrderedDict
+from logging import DEBUG, basicConfig, getLogger
 
 import yaml
+
+# ログ出力設定
+formatter = "%(asctime)s [%(levelname)s] %(message)s"
+basicConfig(level=DEBUG, format=formatter)
+logger = getLogger(__name__)
 
 
 def read(path: str) -> dict:
@@ -11,7 +17,6 @@ def read(path: str) -> dict:
 
     yaml.add_constructor('tag:yaml.org,2002:map', construct_odict)
 
-    print("read")
     with open(path, "r") as f:
         spec = yaml.load(f)
 
@@ -25,7 +30,6 @@ def write(path: str, spec: dict):
 
     yaml.add_representer(OrderedDict, represent_odict)
 
-    print("write")
     with open(path, "w") as f:
         yaml.dump(spec, f, default_flow_style=False)
 
@@ -36,7 +40,7 @@ def filter_dict(value, where_func=lambda: True):
 
         keys = value.keys()
         for key in keys:
-            print(key)
+            logger.debug("key={}".format(key))
             if where_func(key):
                 filter_dict(value[key], where_func)
             else:
