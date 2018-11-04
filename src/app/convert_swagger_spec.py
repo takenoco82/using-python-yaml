@@ -55,6 +55,30 @@ def filter_dict(value, where_func=lambda: True):
             filter_dict(item, where_func)
 
 
+def add_parameter(spec):
+    # メソッド内の parameters に HeaderAuthorization への参照を追加
+    paths = spec["paths"]
+    for path, path_value in paths.items():
+        for method, method_value in path_value.items():
+            logger.debug("path={},method={}".format(path, method))
+
+            parameters = method_value.get("parameters")
+            if not parameters:
+                parameters = []
+                method_value["parameters"] = parameters
+            # 先頭に追加（parameters は list）
+            parameters.insert(0, {'$ref': '#/parameters/HeaderAuthorization'})
+
+    # トップレベルの parameters に HeaderAuthorization の定義を追加
+    parameters = spec["parameters"]
+    parameters["HeaderAuthorization"] = {
+        "in": "header",
+        "name": "Authorization",
+        "type": "string",
+        "description": "test",
+    }
+
+
 def main():
     def where_func(key):
         if key == "example":
@@ -67,6 +91,7 @@ def main():
     path = "./swagger.yaml"
     spec = read(path)
     filter_dict(spec, where_func)
+    add_parameter(spec)
     write(path, spec)
 
 
